@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <div id="main">
+      <div id="left">
+        <div id="header">
+          <img src="/images/Vscode.gif" alt="" />
+          <h2>My VS Code</h2>
+        </div>
+        <div id="finfo">
+          <h4>Uploads</h4>
+          <div id="icons">
+            <i id="file" class="ri-file-line"></i>
+            <i id="folder" class="ri-folder-3-fill"></i>
+            <i id="refresh" class="ri-refresh-line"></i>
+          </div>
+        </div>
+
+        <form action="fileCreate">
+          <input
+            id="fileInput"
+            name="filemake"
+            type="text"
+            placeholder="enter file name"
+          />
+        </form>
+
+        <form action="folderCreate">
+          <input
+            id="folderInput"
+            name="foldermake"
+            type="text"
+            placeholder="enter folder name"
+          />
+        </form>
+
+        <% files.forEach(function(val){ %>
+
+        <div class="files">
+          <ul>
+            <li>
+              <div>
+                <% if(val.isDirectory) { %>
+                <i class="ri-folder-fill"></i>
+                <% } else{ %>
+                <i id="file" class="ri-file-line"></i>
+                <% } %>
+                <a href="/file/<%= val.name %>"><%= val.name %></a>
+              </div>
+              <div id="left-section">
+                <i class="ri-pencil-line"></i>
+                <a href="/delete/<%= val.name %>">
+                  <i class="ri-delete-bin-6-line"></i>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <% }) %>
+      </div>
+      <div id="right">
+        <div class="nav">
+          <div class="fopen">
+            <%= filename %>
+            <i class="ri-close-line"></i>
+          </div>
+        </div>
+        <form action="/save/<%= filename %>" id="formtextarea" method="post">
+          <textarea name="filedata" id="" cols="30" rows="10"><%= filedata %></textarea>
+          <input id="save" type="submit" value="Save" />
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function turnOffBoth() {
+        document.querySelectorAll("#left input").forEach(function (elem) {
+          elem.style.display = "none";
+        });
+      }
+
+      var flag = 0;
+      document.querySelector("#file").addEventListener("click", function () {
+        turnOffBoth();
+        if (!flag) {
+          document.querySelector("#fileInput").style.display = "initial";
+          flag = 1;
+        } else {
+          document.querySelector("#fileInput").style.display = "none";
+          flag = 0;
+        }
+      });
+
+      var flag2 = 0;
+      document.querySelector("#folder").addEventListener("click", function () {
+        turnOffBoth();
+        if (!flag2) {
+          document.querySelector("#folderInput").style.display = "initial";
+          flag2 = 1;
+        } else {
+          document.querySelector("#folderInput").style.display = "none";
+          flag2 = 0;
+        }
+      });
+    </script>
+  </body>
+</html>
